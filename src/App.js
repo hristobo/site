@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import animeAscii from "./asciiArt"; // Import the ASCII art
 import "./style.css"; // Ensure your CSS is linked
+import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
 
 const App = () => {
     const [command, setCommand] = useState("");
@@ -9,13 +10,16 @@ const App = () => {
     const [historyIndex, setHistoryIndex] = useState(-1);
     const terminalEndRef = useRef(null);
     const inputRef = useRef(null);
+    const navigate = useNavigate(); // Hook to handle navigation
 
     const handleCommand = (e) => {
         if (e.key === "Enter") {
             if (command.trim().toLowerCase() === "clear") {
                 setOutput([]); // Clears terminal output
+            } else if (command.trim().toLowerCase() === "pingpong") {
+                navigate("/pingpong"); // Redirect to the ping pong game page
             } else {
-                setOutput((prevOutput) => [...prevOutput, `$ ${command}`, processCommand(command)]);
+                setOutput((prevOutput) => [...prevOutput, `$ ${command}`, ...processCommand(command)]);
                 setHistory((prevHistory) => [...prevHistory, command]); // Save command to history
                 setHistoryIndex(-1);
             }
@@ -45,21 +49,22 @@ const App = () => {
     const processCommand = (cmd) => {
         switch (cmd.toLowerCase()) {
             case "hello":
-                return "👋 zdrkp!";
+                return ["👋 zdrkp!"];
             case "about":
-                return "Hristo gengsta";
+                return ["Hristo gengsta"];
             case "ascii":
-                return animeAscii;
+                return [animeAscii];
             case "boji":
-                  return [
-                      "💖 Boji zdrr! 💖\n",
-                      "💗Boji mnogo si sladkaa! 💗\n",
-                      "💗I love you so much! 💗",
-                  ];
+                return [
+                    "💖 Boji zdrr! 💖",
+                    "💗 Boji mnogo si sladkaa! 💗",
+                    "💗 I love you so much! 💗",
+                ];
             case "clear":
-                return "";
+                setOutput([]);
+                return [];
             default:
-                return "❌ Command not found!";
+                return ["❌ Command not found!"];
         }
     };
 

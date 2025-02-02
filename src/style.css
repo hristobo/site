@@ -1,39 +1,45 @@
-body {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
     background-color: black;
-    color: white;
-    text-align: center;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: green;
+    font-family: monospace;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* This makes the terminal start at the bottom */
 }
 
 .container {
-    margin-top: 100px;
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100vh; /* Full viewport height */
+    overflow-y: auto; /* Allows scrolling when content overflows */
 }
-
-h1, h2 {
-    color: red;
-    text-align: center;
-}
-
-input, button {
-    display: block;
-    margin: 10px auto;
+.terminal {
+    display: flex;
+    flex-direction: column-reverse; /* Ensures new commands start from the bottom */
+    overflow-y: auto;
+    height: 90vh; /* Keeps space for input field */
     padding: 10px;
-    font-size: 18px;
+    width: 100%;
+}
+
+.terminal-input {
+    background: black;
+    color: green;
+    font-size: 16px;
     border: none;
-    border-radius: 5px;
-}
-
-input {
-    width: 50%;
-    text-align: center;
-}
-
-button {
-    background-color: red;
-    color: white;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: darkred;
+    outline: none;
+    width: 100%;
+    padding: 10px;
+    font-family: monospace;
 }

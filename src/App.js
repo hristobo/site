@@ -3,8 +3,8 @@ import "./style.css"; // Import the external CSS
 
 const App = () => {
     // State variables for dynamic text
-    const [mainText, setMainText] = useState("Okvi e idiot!");
-    const [subText, setSubText] = useState("Liviq me obicha!");
+    const [mainText, setMainText] = useState("Taina e idiot!");
+    const [subText, setSubText] = useState("Taina me obicha!");
 
     return (
         <div className="container">

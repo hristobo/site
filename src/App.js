@@ -54,12 +54,6 @@ const App = () => {
                 return ["Hristo gengsta"];
             case "ascii":
                 return [animeAscii];
-            case "boji":
-                return [
-                    "💖 Boji zdrr! 💖",
-                    "💗 Boji mnogo si sladkaa! 💗",
-                    "💗 I love you so much! 💗",
-                ];
             case "clear":
                 setOutput([]);
                 return [];

@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./pingpong.css"; // Scoped CSS
 
 const PingPong = () => {
     const canvasRef = useRef(null);
     const ballRef = useRef({ x: 300, y: 200, dx: 2, dy: 2 }); // Ball state
     const paddleRef = useRef({ x: 275, width: 80 }); // Paddle state
+    const [score, setScore] = useState(0); // Score state
     const paddleSpeed = 8;
     let animationFrameId = useRef(null); // Store animation frame ID
     const keys = { left: false, right: false }; // Track pressed keys
@@ -43,9 +44,17 @@ const PingPong = () => {
             ballRef.current.x += ballRef.current.dx;
             ballRef.current.y += ballRef.current.dy;
 
-            // Bounce off walls
-            if (ballRef.current.x <= 0 || ballRef.current.x >= canvas.width) ballRef.current.dx *= -1;
-            if (ballRef.current.y <= 0) ballRef.current.dy *= -1;
+            // Bounce off left/right walls
+            if (ballRef.current.x <= 0 || ballRef.current.x >= canvas.width) {
+                ballRef.current.dx *= -1;
+                setScore((prev) => prev + 1); // Increase score
+            }
+
+            // Bounce off the top wall
+            if (ballRef.current.y <= 0) {
+                ballRef.current.dy *= -1;
+                setScore((prev) => prev + 1); // Increase score
+            }
 
             // Paddle collision
             if (
@@ -58,11 +67,18 @@ const PingPong = () => {
 
             // Game over if ball hits bottom
             if (ballRef.current.y > canvas.height) {
-                alert("Game Over! Press OK to restart.");
+                alert(`Game Over! Your Score: ${score}`);
                 ballRef.current.x = 300;
                 ballRef.current.y = 200;
                 ballRef.current.dx = 2;
                 ballRef.current.dy = -2;
+                setScore(0); // Reset score
+            }
+
+            // Increase ball speed every 5 points (max limit to prevent insane speed)
+            if (score > 0 && score % 5 === 0) {
+                ballRef.current.dx = Math.sign(ballRef.current.dx) * (2 + score * 0.1); // Increase dx speed
+                ballRef.current.dy = Math.sign(ballRef.current.dy) * (2 + score * 0.1); // Increase dy speed
             }
 
             drawPaddle();
@@ -93,11 +109,12 @@ const PingPong = () => {
             document.removeEventListener("keyup", handleKeyUp);
             cancelAnimationFrame(animationFrameId.current); // Stop animation on unmount
         };
-    }, []);
+    }, [score]);
 
     return (
         <div className="pingpong-container">
             <h2>🏓 Ping Pong Game - Use Arrow Keys to Move</h2>
+            <h3>Score: {score}</h3> {/* Display score */}
             <canvas ref={canvasRef} width="600" height="400" className="pingpong-canvas"></canvas>
             <a href="/site" className="back-button">⬅ Go Back</a>
         </div>

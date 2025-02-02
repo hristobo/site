@@ -4,7 +4,7 @@ import "./style.css"; // Ensure your CSS is linked
 
 const App = () => {
     const [command, setCommand] = useState("");
-    const [output, setOutput] = useState([animeAscii, "Welcome to the Anime Terminal!"]);
+    const [output, setOutput] = useState([animeAscii, "zdr bqgai ot tuka be"]);
     const [history, setHistory] = useState([]);
     const [historyIndex, setHistoryIndex] = useState(-1);
     const terminalEndRef = useRef(null);
@@ -45,11 +45,17 @@ const App = () => {
     const processCommand = (cmd) => {
         switch (cmd.toLowerCase()) {
             case "hello":
-                return "👋 Hello, hacker!";
+                return "👋 zdrkp!";
             case "about":
-                return "I am a React Developer!";
+                return "Hristo gengsta";
             case "ascii":
                 return animeAscii;
+            case "boji":
+                  return [
+                      "💖 Boji zdrr! 💖\n",
+                      "💗Boji mnogo si sladkaa! 💗\n",
+                      "💗I love you so much! 💗",
+                  ];
             case "clear":
                 return "";
             default:

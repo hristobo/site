@@ -8,7 +8,11 @@ const App = () => {
 
     const handleCommand = (e) => {
         if (e.key === "Enter") {
-            setOutput([...output, `$ ${command}`, processCommand(command)]);
+            if (command.trim().toLowerCase() === "clear") {
+                setOutput([]); // Clear the output properly
+            } else {
+                setOutput((prevOutput) => [...prevOutput, `$ ${command}`, processCommand(command)]);
+            }
             setCommand("");
         }
     };
@@ -20,14 +24,13 @@ const App = () => {
             case "about":
                 return "I am a React Developer!";
             case "clear":
-                setOutput([]);
-                return "";
+                return ""; // This won't be reached since we handle "clear" separately
             default:
                 return "❌ Command not found!";
         }
     };
 
-    // Scroll to bottom when output updates
+    // Auto-scroll to the bottom when output updates
     useEffect(() => {
         terminalEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [output]);
@@ -38,7 +41,7 @@ const App = () => {
                 {output.map((line, index) => (
                     <div key={index}>{line}</div>
                 ))}
-                <div ref={terminalEndRef} /> {/* Invisible div to keep scroll at bottom */}
+                <div ref={terminalEndRef} /> {/* Keeps scroll at bottom */}
             </div>
 
             <input

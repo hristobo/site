@@ -11,24 +11,22 @@ html, body {
     font-family: monospace;
     display: flex;
     justify-content: center;
-    align-items: flex-end; /* This makes the terminal start at the bottom */
+    align-items: center;
 }
 
 .container {
     width: 100%;
     max-width: 800px;
-    padding: 20px;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    height: 100vh; /* Full viewport height */
-    overflow-y: auto; /* Allows scrolling when content overflows */
+    justify-content: flex-end; /* Keeps input at bottom */
+    overflow: hidden;
 }
+
 .terminal {
-    display: flex;
-    flex-direction: column-reverse; /* Ensures new commands start from the bottom */
-    overflow-y: auto;
-    height: 90vh; /* Keeps space for input field */
+    flex-grow: 1;
+    overflow-y: auto; /* Allows scrolling when content is long */
     padding: 10px;
     width: 100%;
 }
